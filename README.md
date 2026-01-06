@@ -123,11 +123,7 @@ blood_donation_network/
 ## 👤 Admin Credentials
 
 ```
-Name: M.ch.v.Sai Phanindhra
-Email: saimerla633@gmail.com
-Password: RathnamMerla@2004
-Contact: 8465989747
-```
+
 
 **⚠️ Important:** Keep these credentials secure and change the password periodically!
 
