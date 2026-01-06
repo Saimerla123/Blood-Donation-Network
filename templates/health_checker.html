@@ -1,0 +1,253 @@
+{% extends "base.html" %}
+
+{% block title %}Blood Donation Eligibility Checker - Blood Donation Network{% endblock %}
+
+{% block content %}
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5">
+            <i class="fas fa-heartbeat fa-3x text-danger mb-3"></i>
+            <h2 class="display-5 fw-bold text-danger mb-3">Blood Donation Eligibility Checker</h2>
+            <p class="lead text-muted">Check if you're eligible to donate blood based on your health parameters</p>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <!-- Health Checker Form -->
+                <div class="card shadow-sm border-0 mb-4">
+                    <div class="card-header bg-danger text-white">
+                        <h4 class="mb-0"><i class="fas fa-clipboard-check me-2"></i>Enter Your Information</h4>
+                    </div>
+                    <div class="card-body p-4">
+                        <form method="POST" action="{{ url_for('health_checker') }}">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="age" class="form-label">
+                                        <i class="fas fa-calendar me-1"></i>Age (years) *
+                                    </label>
+                                    <input type="number" class="form-control" id="age" name="age" 
+                                           min="1" max="120" placeholder="Enter your age" required>
+                                    <small class="text-muted">Must be 18-65 years</small>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="gender" class="form-label">
+                                        <i class="fas fa-venus-mars me-1"></i>Gender *
+                                    </label>
+                                    <select class="form-select" id="gender" name="gender" required>
+                                        <option value="">Select...</option>
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="weight" class="form-label">
+                                        <i class="fas fa-weight me-1"></i>Weight (kg) *
+                                    </label>
+                                    <input type="number" class="form-control" id="weight" name="weight" 
+                                           min="1" max="300" step="0.1" placeholder="Enter weight in kg" required>
+                                    <small class="text-muted">Minimum 50 kg required</small>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="height" class="form-label">
+                                        <i class="fas fa-ruler-vertical me-1"></i>Height (cm) *
+                                    </label>
+                                    <input type="number" class="form-control" id="height" name="height" 
+                                           min="1" max="300" step="0.1" placeholder="Enter height in cm" required>
+                                    <small class="text-muted">e.g., 170 cm</small>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-danger btn-lg w-100 mt-3">
+                                <i class="fas fa-check-circle me-2"></i>Check Eligibility
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                {% if result %}
+                <!-- Results -->
+                <div class="card shadow-sm border-0 mb-4">
+                    <div class="card-header {% if result.eligible %}bg-success{% else %}bg-warning{% endif %} text-white">
+                        <h4 class="mb-0">
+                            <i class="fas {% if result.eligible %}fa-check-circle{% else %}fa-exclamation-triangle{% endif %} me-2"></i>
+                            Eligibility Results
+                        </h4>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="row mb-4">
+                            <div class="col-md-3">
+                                <div class="text-center p-3 bg-light rounded">
+                                    <h6 class="text-muted mb-1">Age</h6>
+                                    <h4 class="mb-0">{{ result.age }}</h4>
+                                    <small>years</small>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="text-center p-3 bg-light rounded">
+                                    <h6 class="text-muted mb-1">Weight</h6>
+                                    <h4 class="mb-0">{{ result.weight }}</h4>
+                                    <small>kg</small>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="text-center p-3 bg-light rounded">
+                                    <h6 class="text-muted mb-1">Height</h6>
+                                    <h4 class="mb-0">{{ result.height }}</h4>
+                                    <small>cm</small>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="text-center p-3 bg-light rounded">
+                                    <h6 class="text-muted mb-1">BMI</h6>
+                                    <h4 class="mb-0">{{ bmi }}</h4>
+                                    <small>{% if bmi < 18.5 %}Underweight{% elif bmi < 25 %}Normal{% elif bmi < 30 %}Overweight{% else %}Obese{% endif %}</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        {% if result.eligible %}
+                            <div class="alert alert-success border-0">
+                                <h5 class="alert-heading">
+                                    <i class="fas fa-check-circle me-2"></i>You are Eligible to Donate Blood!
+                                </h5>
+                                <p class="mb-0">Based on your height and weight, you meet the basic requirements for blood donation. However, please note:</p>
+                                <ul class="mt-2 mb-0">
+                                    <li>This is a preliminary check based on physical parameters only</li>
+                                    <li>Additional medical screening will be done at the donation center</li>
+                                    <li>Make sure you're in good health and haven't donated in the last 8 weeks</li>
+                                    <li>Follow the <a href="{{ url_for('diet_plan') }}" class="alert-link">diet plan</a> before donation</li>
+                                </ul>
+                            </div>
+                            <div class="text-center mt-3">
+                                <a href="{{ url_for('register') }}" class="btn btn-success btn-lg">
+                                    <i class="fas fa-user-plus me-2"></i>Register as Donor
+                                </a>
+                            </div>
+                        {% else %}
+                            <div class="alert alert-warning border-0">
+                                <h5 class="alert-heading">
+                                    <i class="fas fa-exclamation-triangle me-2"></i>Currently Not Eligible
+                                </h5>
+                                <p class="mb-2">Based on the information provided, you may not be eligible to donate blood at this time due to:</p>
+                                <ul class="mb-3">
+                                    {% for reason in result.reasons %}
+                                        <li>{{ reason }}</li>
+                                    {% endfor %}
+                                </ul>
+                                <p class="mb-0"><strong>What you can do:</strong></p>
+                                <ul class="mb-0">
+                                    <li>Consult with a healthcare provider for personalized advice</li>
+                                    <li>Work towards meeting the eligibility criteria if possible</li>
+                                    <li>Check our <a href="{{ url_for('diet_plan') }}" class="alert-link">diet plan</a> to improve your health</li>
+                                    <li>You can support in other ways like spreading awareness</li>
+                                </ul>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- General Eligibility Criteria -->
+                <div class="card shadow-sm border-0 mb-4">
+                    <div class="card-header bg-danger text-white">
+                        <h4 class="mb-0"><i class="fas fa-list-check me-2"></i>General Eligibility Criteria</h4>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <h6 class="text-success"><i class="fas fa-check-circle me-2"></i>Basic Requirements</h6>
+                                <ul>
+                                    <li>Age: 18-65 years</li>
+                                    <li>Weight: Minimum 50 kg</li>
+                                    <li>BMI: 18.5 - 30</li>
+                                    <li>Hemoglobin: Men ≥13g/dL, Women ≥12g/dL</li>
+                                    <li>Blood Pressure: 90/60 to 140/90</li>
+                                    <li>Pulse: 50-100 per minute</li>
+                                    <li>Temperature: Normal (98.6°F/37°C)</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <h6 class="text-danger"><i class="fas fa-times-circle me-2"></i>Temporary Deferrals</h6>
+                                <ul>
+                                    <li>Recent tattoo/piercing (6 months)</li>
+                                    <li>Recent illness or infection</li>
+                                    <li>Recent surgery (6 months)</li>
+                                    <li>Pregnancy or recent childbirth</li>
+                                    <li>Taking certain medications</li>
+                                    <li>Recent vaccination (varies)</li>
+                                    <li>Traveled to malaria-endemic areas</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="alert alert-info border-0 mt-3">
+                            <h6 class="alert-heading"><i class="fas fa-info-circle me-2"></i>Additional Screening</h6>
+                            <p class="mb-0">
+                                At the donation center, you will undergo additional screening including:
+                                blood type testing, infectious disease screening, detailed medical history,
+                                and physical examination by a healthcare professional.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BMI Reference -->
+                <div class="card shadow-sm border-0 mb-4">
+                    <div class="card-header bg-danger text-white">
+                        <h4 class="mb-0"><i class="fas fa-chart-bar me-2"></i>BMI Reference Guide</h4>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>BMI Range</th>
+                                        <th>Category</th>
+                                        <th>Donation Eligibility</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>&lt; 18.5</td>
+                                        <td>Underweight</td>
+                                        <td><span class="badge bg-warning">May Not Qualify</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>18.5 - 24.9</td>
+                                        <td>Normal Weight</td>
+                                        <td><span class="badge bg-success">Eligible</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>25.0 - 29.9</td>
+                                        <td>Overweight</td>
+                                        <td><span class="badge bg-success">Eligible</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>≥ 30.0</td>
+                                        <td>Obese</td>
+                                        <td><span class="badge bg-warning">Medical Evaluation Needed</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p class="small text-muted mb-0">
+                            <i class="fas fa-info-circle me-1"></i>
+                            BMI is calculated as: Weight (kg) ÷ [Height (m)]²
+                        </p>
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <a href="{{ url_for('diet_plan') }}" class="btn btn-outline-danger btn-lg me-2">
+                        <i class="fas fa-utensils me-2"></i>View Diet Plan
+                    </a>
+                    <a href="{{ url_for('index') }}" class="btn btn-outline-secondary btn-lg">
+                        <i class="fas fa-arrow-left me-2"></i>Back to Home
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+
+{% block title %}Donation History - Blood Donation Network{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <!-- Badge and Stats -->
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="card shadow">
+                <div class="card-body text-center">
+                    <h2 class="mb-3">Your Donation Journey</h2>
+                    {% if badge %}
+                    <div class="mb-3">
+                        <span class="badge p-3" style="font-size: 1.5rem; background-color: {{ badge_color }}; color: #000;">
+                            <i class="fas fa-trophy"></i> {{ badge }}
+                        </span>
+                    </div>
+                    {% endif %}
+                    <h3 class="text-danger">{{ total_donations }} Donations</h3>
+                    <p class="text-muted">You have saved approximately {{ total_donations * 3 }} lives!</p>
+                    
+                    <!-- Achievement Progress -->
+                    <div class="row mt-4">
+                        <div class="col-md-3">
+                            <div class="text-center p-3 {{ 'bg-success text-white' if total_donations >= 5 else 'bg-light' }} rounded">
+                                <i class="fas fa-medal fa-2x mb-2"></i>
+                                <p class="mb-0"><strong>Bronze</strong></p>
+                                <small>5+ donations</small>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="text-center p-3 {{ 'bg-secondary text-white' if total_donations >= 10 else 'bg-light' }} rounded">
+                                <i class="fas fa-medal fa-2x mb-2"></i>
+                                <p class="mb-0"><strong>Silver</strong></p>
+                                <small>10+ donations</small>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="text-center p-3 {{ 'bg-warning text-white' if total_donations >= 25 else 'bg-light' }} rounded">
+                                <i class="fas fa-medal fa-2x mb-2"></i>
+                                <p class="mb-0"><strong>Gold</strong></p>
+                                <small>25+ donations</small>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="text-center p-3 {{ 'bg-info text-white' if total_donations >= 50 else 'bg-light' }} rounded">
+                                <i class="fas fa-crown fa-2x mb-2"></i>
+                                <p class="mb-0"><strong>Platinum</strong></p>
+                                <small>50+ donations</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Donation Records -->
+    <div class="card shadow">
+        <div class="card-header bg-danger text-white d-flex justify-content-between align-items-center">
+            <h4 class="mb-0"><i class="fas fa-history"></i> Donation History</h4>
+            <a href="{{ url_for('add_donation') }}" class="btn btn-light btn-sm">
+                <i class="fas fa-plus"></i> Add Donation
+            </a>
+        </div>
+        <div class="card-body">
+            {% if donations %}
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Date</th>
+                            <th>Blood Group</th>
+                            <th>Units</th>
+                            <th>Location</th>
+                            <th>Certificate #</th>
+                            <th>Next Eligible</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for donation in donations %}
+                        <tr>
+                            <td>
+                                <i class="fas fa-calendar"></i>
+                                {{ donation['donation_date'] }}
+                            </td>
+                            <td>
+                                <span class="badge bg-danger">{{ donation['blood_group'] }}</span>
+                            </td>
+                            <td>{{ donation['units_donated'] }}</td>
+                            <td>{{ donation['donation_center'] or 'Not specified' }}</td>
+                            <td>
+                                <code>{{ donation['certificate_number'] }}</code>
+                            </td>
+                            <td>
+                                <small class="text-muted">{{ donation['next_eligible_date'] }}</small>
+                            </td>
+                            <td>
+                                <a href="{{ url_for('download_certificate', donation_id=donation['id']) }}" 
+                                   class="btn btn-sm btn-outline-danger" target="_blank">
+                                    <i class="fas fa-download"></i> Certificate
+                                </a>
+                            </td>
+                        </tr>
+                        {% if donation['notes'] %}
+                        <tr>
+                            <td colspan="7" class="bg-light">
+                                <small><strong>Notes:</strong> {{ donation['notes'] }}</small>
+                            </td>
+                        </tr>
+                        {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="text-center py-5">
+                <i class="fas fa-heartbeat fa-3x text-muted mb-3"></i>
+                <h5 class="text-muted">No donation records yet</h5>
+                <p class="text-muted">Start tracking your life-saving donations!</p>
+                <a href="{{ url_for('add_donation') }}" class="btn btn-danger">
+                    <i class="fas fa-plus"></i> Add First Donation
+                </a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="mt-3">
+        <a href="{{ url_for('dashboard') }}" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left"></i> Back to Dashboard
+        </a>
+    </div>
+</div>
+
+<style>
+.badge {
+    transition: transform 0.3s ease;
+}
+.badge:hover {
+    transform: scale(1.1);
+}
+</style>
+{% endblock %}

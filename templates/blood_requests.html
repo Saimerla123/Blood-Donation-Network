@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block title %}Active Blood Requests - Blood Donation Network{% endblock %}
+
+{% block content %}
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="card shadow-sm border-0 mb-4">
+            <div class="card-header bg-danger text-white">
+                <h4 class="mb-0">
+                    <i class="fas fa-heartbeat me-2"></i>Active Blood Requests
+                    <span class="badge bg-white text-danger ms-2">{{ requests|length }}</span>
+                </h4>
+            </div>
+            <div class="card-body p-0">
+                {% if requests %}
+                    {% for req in requests %}
+                    <div class="border-bottom p-4 {% if req['urgency'] == 'critical' %}bg-danger bg-opacity-10{% elif req['urgency'] == 'urgent' %}bg-warning bg-opacity-10{% endif %}">
+                        <div class="row align-items-center">
+                            <div class="col-md-2 text-center mb-3 mb-md-0">
+                                <div class="blood-group-badge bg-danger text-white rounded-circle d-inline-flex align-items-center justify-content-center" 
+                                     style="width: 80px; height: 80px; font-size: 1.5rem; font-weight: bold;">
+                                    {{ req['blood_group'] }}
+                                </div>
+                                <div class="mt-2">
+                                    <span class="badge 
+                                        {% if req['urgency'] == 'critical' %}bg-danger
+                                        {% elif req['urgency'] == 'urgent' %}bg-warning text-dark
+                                        {% else %}bg-secondary{% endif %}">
+                                        {{ req['urgency']|upper }}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-7">
+                                <h5 class="mb-2">
+                                    <i class="fas fa-hospital me-2 text-danger"></i>{{ req['hospital_name'] }}
+                                </h5>
+                                <p class="mb-1">
+                                    <i class="fas fa-vial me-2 text-muted"></i>
+                                    <strong>Units Needed:</strong> {{ req['units_needed'] }}
+                                </p>
+                                <p class="mb-1">
+                                    <i class="fas fa-user me-2 text-muted"></i>
+                                    <strong>Contact Person:</strong> {{ req['contact_person'] }}
+                                </p>
+                                <p class="mb-1">
+                                    <i class="fas fa-phone me-2 text-muted"></i>
+                                    <strong>Phone:</strong> <a href="tel:{{ req['contact_phone'] }}" class="text-decoration-none">{{ req['contact_phone'] }}</a>
+                                </p>
+                                <p class="mb-1">
+                                    <i class="fas fa-envelope me-2 text-muted"></i>
+                                    <strong>Requested By:</strong> {{ req['receiver_name'] }} 
+                                    (<a href="mailto:{{ req['receiver_email'] }}" class="text-decoration-none">{{ req['receiver_email'] }}</a>)
+                                </p>
+                                {% if req['additional_notes'] %}
+                                <p class="mb-1 mt-2">
+                                    <i class="fas fa-sticky-note me-2 text-muted"></i>
+                                    <strong>Notes:</strong> {{ req['additional_notes'] }}
+                                </p>
+                                {% endif %}
+                                <p class="mb-0 text-muted small">
+                                    <i class="fas fa-clock me-1"></i>Posted: {{ req['created_at'][:16] }}
+                                </p>
+                            </div>
+                            <div class="col-md-3 text-center">
+                                {% if session.role == 'donor' %}
+                                    <a href="tel:{{ req['contact_phone'] }}" class="btn btn-danger w-100 mb-2">
+                                        <i class="fas fa-phone me-2"></i>Call Now
+                                    </a>
+                                    <a href="mailto:{{ req['receiver_email'] }}?subject=Blood Donation Response - {{ req['blood_group'] }}&body=Hi, I am willing to donate blood. My details:%0D%0ABlood Group: {{ req['blood_group'] }}" 
+                                       class="btn btn-outline-danger w-100">
+                                        <i class="fas fa-envelope me-2"></i>Email
+                                    </a>
+                                {% else %}
+                                    <div class="alert alert-info mb-0 small">
+                                        <i class="fas fa-info-circle me-1"></i>
+                                        Switch to Donor role to respond
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="text-center py-5">
+                        <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
+                        <h5 class="text-muted">No Active Blood Requests</h5>
+                        <p class="text-muted">There are currently no urgent blood requests.</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="text-center">
+            {% if session.role == 'receiver' %}
+                <a href="{{ url_for('create_request') }}" class="btn btn-danger btn-lg me-2">
+                    <i class="fas fa-plus-circle me-2"></i>Create New Request
+                </a>
+            {% endif %}
+            <a href="{{ url_for('dashboard') }}" class="btn btn-outline-secondary btn-lg">
+                <i class="fas fa-arrow-left me-2"></i>Back to Dashboard
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

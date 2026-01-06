@@ -1,0 +1,251 @@
+{% extends "base.html" %}
+
+{% block title %}Diet Plan for Blood Donors - Blood Donation Network{% endblock %}
+
+{% block content %}
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5">
+            <i class="fas fa-utensils fa-3x text-danger mb-3"></i>
+            <h2 class="display-5 fw-bold text-danger mb-3">Diet Plan for Blood Donors</h2>
+            <p class="lead text-muted">Proper nutrition before and after blood donation</p>
+        </div>
+
+        <!-- Before Donation -->
+        <div class="card shadow-sm border-0 mb-4">
+            <div class="card-header bg-danger text-white">
+                <h4 class="mb-0"><i class="fas fa-calendar-minus me-2"></i>Before Blood Donation</h4>
+            </div>
+            <div class="card-body p-4">
+                <h5 class="text-danger mb-3">24-48 Hours Before</h5>
+                <div class="row g-4 mb-4">
+                    <div class="col-md-6">
+                        <div class="p-3 bg-light rounded">
+                            <h6 class="text-success"><i class="fas fa-check-circle me-2"></i>Foods to Include</h6>
+                            <ul class="mb-0">
+                                <li><strong>Iron-Rich Foods:</strong> Spinach, red meat, beans, lentils, fortified cereals</li>
+                                <li><strong>Vitamin C:</strong> Oranges, strawberries, bell peppers (helps iron absorption)</li>
+                                <li><strong>Protein:</strong> Eggs, fish, chicken, dairy products, nuts</li>
+                                <li><strong>Hydration:</strong> Drink 8-10 glasses of water</li>
+                                <li><strong>Whole Grains:</strong> Brown rice, whole wheat bread, oatmeal</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="p-3 bg-light rounded">
+                            <h6 class="text-danger"><i class="fas fa-times-circle me-2"></i>Foods to Avoid</h6>
+                            <ul class="mb-0">
+                                <li>Fatty or fried foods</li>
+                                <li>Excessive caffeine</li>
+                                <li>Alcohol (24 hours before)</li>
+                                <li>Junk food and sodas</li>
+                                <li>Foods high in salt</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <h5 class="text-danger mb-3">Morning of Donation</h5>
+                <div class="alert alert-info border-0">
+                    <h6><i class="fas fa-breakfast me-2"></i>Recommended Breakfast</h6>
+                    <ul class="mb-0">
+                        <li><strong>Option 1:</strong> Oatmeal with banana and a glass of orange juice</li>
+                        <li><strong>Option 2:</strong> Whole wheat toast with eggs and fresh fruit</li>
+                        <li><strong>Option 3:</strong> Greek yogurt with granola, berries, and honey</li>
+                        <li><strong>Important:</strong> Drink at least 2-3 glasses of water</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- During Donation -->
+        <div class="card shadow-sm border-0 mb-4">
+            <div class="card-header bg-danger text-white">
+                <h4 class="mb-0"><i class="fas fa-heartbeat me-2"></i>During Blood Donation</h4>
+            </div>
+            <div class="card-body p-4">
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <div class="text-center p-3 bg-light rounded">
+                            <i class="fas fa-tint fa-2x text-danger mb-2"></i>
+                            <h6>Stay Hydrated</h6>
+                            <p class="small mb-0">Drink water or juice provided at the donation center</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="text-center p-3 bg-light rounded">
+                            <i class="fas fa-cookie fa-2x text-danger mb-2"></i>
+                            <h6>Have a Snack</h6>
+                            <p class="small mb-0">Cookies, crackers, or juice after donation</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="text-center p-3 bg-light rounded">
+                            <i class="fas fa-chair fa-2x text-danger mb-2"></i>
+                            <h6>Rest & Relax</h6>
+                            <p class="small mb-0">Sit for 10-15 minutes after donation</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- After Donation -->
+        <div class="card shadow-sm border-0 mb-4">
+            <div class="card-header bg-danger text-white">
+                <h4 class="mb-0"><i class="fas fa-calendar-plus me-2"></i>After Blood Donation</h4>
+            </div>
+            <div class="card-body p-4">
+                <h5 class="text-danger mb-3">First 24 Hours</h5>
+                <div class="row g-4 mb-4">
+                    <div class="col-md-6">
+                        <div class="p-3 bg-light rounded">
+                            <h6 class="text-success"><i class="fas fa-check-circle me-2"></i>Recommended Actions</h6>
+                            <ul class="mb-0">
+                                <li>Drink extra fluids (3-4 liters of water)</li>
+                                <li>Eat iron-rich meals</li>
+                                <li>Have protein-rich snacks</li>
+                                <li>Get adequate rest (7-8 hours sleep)</li>
+                                <li>Keep the bandage on for 4-5 hours</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="p-3 bg-light rounded">
+                            <h6 class="text-danger"><i class="fas fa-exclamation-triangle me-2"></i>Things to Avoid</h6>
+                            <ul class="mb-0">
+                                <li>Strenuous exercise or heavy lifting</li>
+                                <li>Smoking for at least 2 hours</li>
+                                <li>Alcohol for 24 hours</li>
+                                <li>Hot showers immediately after</li>
+                                <li>Standing for long periods</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <h5 class="text-danger mb-3">Sample Meal Plan (Post-Donation Day)</h5>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Meal</th>
+                                <th>Food Items</th>
+                                <th>Nutritional Benefit</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Breakfast</strong></td>
+                                <td>Spinach omelet, whole grain toast, orange juice</td>
+                                <td>Iron, protein, vitamin C</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Mid-Morning</strong></td>
+                                <td>Apple with peanut butter, water</td>
+                                <td>Energy, protein, hydration</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Lunch</strong></td>
+                                <td>Grilled chicken, brown rice, steamed broccoli, salad</td>
+                                <td>Protein, iron, vitamins</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Evening Snack</strong></td>
+                                <td>Greek yogurt with berries, nuts</td>
+                                <td>Protein, antioxidants</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Dinner</strong></td>
+                                <td>Fish/lentils, quinoa, mixed vegetables</td>
+                                <td>Omega-3, protein, minerals</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Long-term Diet -->
+        <div class="card shadow-sm border-0 mb-4">
+            <div class="card-header bg-danger text-white">
+                <h4 class="mb-0"><i class="fas fa-heart me-2"></i>Regular Donor's Diet</h4>
+            </div>
+            <div class="card-body p-4">
+                <p class="lead">For regular blood donors, maintaining a balanced diet is crucial:</p>
+                <div class="row g-3">
+                    <div class="col-md-3">
+                        <div class="card h-100 border-danger">
+                            <div class="card-body text-center">
+                                <i class="fas fa-leaf fa-2x text-success mb-2"></i>
+                                <h6>Iron</h6>
+                                <small>Red meat, spinach, beans, fortified cereals</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card h-100 border-danger">
+                            <div class="card-body text-center">
+                                <i class="fas fa-lemon fa-2x text-warning mb-2"></i>
+                                <h6>Vitamin C</h6>
+                                <small>Citrus fruits, tomatoes, bell peppers</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card h-100 border-danger">
+                            <div class="card-body text-center">
+                                <i class="fas fa-drumstick-bite fa-2x text-danger mb-2"></i>
+                                <h6>Protein</h6>
+                                <small>Chicken, fish, eggs, dairy, legumes</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card h-100 border-danger">
+                            <div class="card-body text-center">
+                                <i class="fas fa-tint fa-2x text-info mb-2"></i>
+                                <h6>Hydration</h6>
+                                <small>8-10 glasses of water daily</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Important Tips -->
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-danger text-white">
+                <h4 class="mb-0"><i class="fas fa-lightbulb me-2"></i>Important Tips</h4>
+            </div>
+            <div class="card-body p-4">
+                <div class="alert alert-warning border-0">
+                    <h6 class="alert-heading"><i class="fas fa-exclamation-circle me-2"></i>When to Seek Medical Attention</h6>
+                    <ul class="mb-0">
+                        <li>If you feel dizzy or faint for more than a few hours</li>
+                        <li>If the puncture site continues to bleed or bruise badly</li>
+                        <li>If you experience numbness or tingling in your arm</li>
+                        <li>If you develop signs of infection at the puncture site</li>
+                    </ul>
+                </div>
+                <div class="mt-3">
+                    <p class="mb-2"><i class="fas fa-check text-success me-2"></i><strong>Wait 8 weeks</strong> before donating whole blood again</p>
+                    <p class="mb-2"><i class="fas fa-check text-success me-2"></i><strong>Take iron supplements</strong> if recommended by your doctor</p>
+                    <p class="mb-2"><i class="fas fa-check text-success me-2"></i><strong>Maintain a balanced diet</strong> with regular meals</p>
+                    <p class="mb-0"><i class="fas fa-check text-success me-2"></i><strong>Stay hydrated</strong> throughout the day</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="{{ url_for('index') }}" class="btn btn-outline-danger btn-lg">
+                <i class="fas fa-arrow-left me-2"></i>Back to Home
+            </a>
+            <a href="{{ url_for('health_checker') }}" class="btn btn-danger btn-lg">
+                <i class="fas fa-heartbeat me-2"></i>Check Your Eligibility
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

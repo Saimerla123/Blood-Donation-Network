@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}Add Donation - Blood Donation Network{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-danger text-white">
+                    <h4 class="mb-0"><i class="fas fa-plus-circle"></i> Add Donation Record</h4>
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        <div class="mb-3">
+                            <label for="donation_date" class="form-label">Donation Date *</label>
+                            <input type="date" class="form-control" id="donation_date" name="donation_date" 
+                                   max="{{ datetime.now().strftime('%Y-%m-%d') }}" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="units_donated" class="form-label">Units Donated</label>
+                            <input type="number" class="form-control" id="units_donated" name="units_donated" 
+                                   value="1" min="0.5" max="2" step="0.5">
+                            <small class="text-muted">Standard donation is 1 unit (450ml)</small>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="donation_center" class="form-label">Donation Center/Hospital</label>
+                            <input type="text" class="form-control" id="donation_center" name="donation_center"
+                                   placeholder="e.g., City Blood Bank, General Hospital">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="notes" class="form-label">Notes (Optional)</label>
+                            <textarea class="form-control" id="notes" name="notes" rows="3"
+                                      placeholder="Any additional information about this donation..."></textarea>
+                        </div>
+
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle"></i>
+                            <strong>Note:</strong> A donation certificate will be automatically generated. 
+                            You will be eligible to donate again after 3 months.
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-danger">
+                                <i class="fas fa-save"></i> Save Donation Record
+                            </button>
+                            <a href="{{ url_for('donation_history') }}" class="btn btn-outline-secondary">
+                                <i class="fas fa-arrow-left"></i> Back to History
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

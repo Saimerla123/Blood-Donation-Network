@@ -1,0 +1,300 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Blood Donation Network{% endblock %}
+
+{% block content %}
+<section class="dashboard-section py-5 bg-light">
+    <div class="container">
+        <!-- User Header -->
+        <div class="card shadow-sm border-0 mb-4">
+            <div class="card-body p-4">
+                <div class="row align-items-center">
+                    <div class="col-md-8">
+                        <h3 class="mb-2">
+                            <i class="fas fa-user-circle text-danger me-2"></i>
+                            Welcome, {{ user['name'] }}!
+                        </h3>
+                        <p class="text-muted mb-0">
+                            <i class="fas fa-user-tag me-2"></i>
+                            Current Role: <span class="badge bg-danger">{{ user['role']|upper }}</span>
+                            {% if donor_details %}
+                                | Blood Group: <span class="badge bg-danger">{{ donor_details['blood_group'] }}</span>
+                                | Status: <span class="badge {% if donor_details['availability_status'] == 'available' %}bg-success{% else %}bg-secondary{% endif %}">
+                                    {{ donor_details['availability_status']|upper }}
+                                </span>
+                            {% endif %}
+                        </p>
+                    </div>
+                    <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                        <a href="{{ url_for('edit_profile') }}" class="btn btn-outline-danger">
+                            <i class="fas fa-edit me-1"></i>Edit Profile
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <!-- Left Column -->
+            <div class="col-lg-4">
+                <!-- Quick Actions -->
+                <div class="card shadow-sm border-0 mb-4">
+                    <div class="card-header bg-danger text-white">
+                        <h5 class="mb-0"><i class="fas fa-bolt me-2"></i>Quick Actions</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-grid gap-2">
+                            <a href="{{ url_for('blood_requests') }}" class="btn btn-danger">
+                                <i class="fas fa-heartbeat me-2"></i>View Blood Requests
+                            </a>
+                            {% if user['role'] == 'donor' %}
+                                <a href="{{ url_for('donation_history') }}" class="btn btn-warning">
+                                    <i class="fas fa-history me-2"></i>Donation History
+                                </a>
+                                <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#switchRoleModal">
+                                    <i class="fas fa-exchange-alt me-2"></i>Switch to Receiver
+                                </button>
+                            {% else %}
+                                <a href="{{ url_for('create_request') }}" class="btn btn-warning">
+                                    <i class="fas fa-plus-circle me-2"></i>Create Blood Request
+                                </a>
+                                <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#switchRoleModal">
+                                    <i class="fas fa-exchange-alt me-2"></i>Switch to Donor
+                                </button>
+                                <a href="{{ url_for('search_donors') }}" class="btn btn-outline-danger">
+                                    <i class="fas fa-search me-2"></i>Search Donors
+                                </a>
+                            {% endif %}
+                            <a href="{{ url_for('edit_profile') }}" class="btn btn-outline-secondary">
+                                <i class="fas fa-user-edit me-2"></i>Update Profile
+                            </a>
+                            <a href="{{ url_for('logout') }}" class="btn btn-outline-dark">
+                                <i class="fas fa-sign-out-alt me-2"></i>Logout
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- User Info -->
+                <div class="card shadow-sm border-0">
+                    <div class="card-header bg-danger text-white">
+                        <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>Your Information</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <small class="text-muted">Email</small>
+                            <p class="mb-0 fw-bold">{{ user['email'] }}</p>
+                        </div>
+                        <div class="mb-3">
+                            <small class="text-muted">Phone</small>
+                            <p class="mb-0 fw-bold">{{ user['phone'] }}</p>
+                        </div>
+                        <div class="mb-3">
+                            <small class="text-muted">Address</small>
+                            <p class="mb-0 fw-bold">{{ user['address'] }}</p>
+                        </div>
+                        <div class="mb-0">
+                            <small class="text-muted">Member Since</small>
+                            <p class="mb-0 fw-bold">{{ user['created_at'][:10] }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="col-lg-8">
+                {% if user['role'] == 'donor' %}
+                    <!-- Donor Dashboard -->
+                    <div class="card shadow-sm border-0 mb-4">
+                        <div class="card-header bg-danger text-white">
+                            <h5 class="mb-0"><i class="fas fa-tint me-2"></i>Donor Dashboard</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row text-center g-3">
+                                <div class="col-md-4">
+                                    <div class="p-3 bg-light rounded">
+                                        <i class="fas fa-heartbeat text-danger fa-2x mb-2"></i>
+                                        <h4 class="mb-0">{{ donor_details['blood_group'] }}</h4>
+                                        <small class="text-muted">Blood Group</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="p-3 bg-light rounded">
+                                        <i class="fas fa-check-circle {% if donor_details['availability_status'] == 'available' %}text-success{% else %}text-secondary{% endif %} fa-2x mb-2"></i>
+                                        <h6 class="mb-0">{{ donor_details['availability_status']|upper }}</h6>
+                                        <small class="text-muted">Availability</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="p-3 bg-light rounded">
+                                        <i class="fas fa-calendar text-danger fa-2x mb-2"></i>
+                                        <h6 class="mb-0">Active</h6>
+                                        <small class="text-muted">Status</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="my-4">
+                            <div class="alert alert-info border-0">
+                                <h6 class="alert-heading"><i class="fas fa-info-circle me-2"></i>Donor Information</h6>
+                                <p class="mb-0 small">
+                                    As a donor, your profile is visible to receivers searching for blood. 
+                                    Make sure to keep your availability status updated and respond promptly when contacted.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Donation Tips -->
+                    <div class="card shadow-sm border-0">
+                        <div class="card-header bg-danger text-white">
+                            <h5 class="mb-0"><i class="fas fa-lightbulb me-2"></i>Donation Tips</h5>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-unstyled mb-0">
+                                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Drink plenty of water before and after donation</li>
+                                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Eat a healthy meal before donating</li>
+                                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Wait at least 56 days between whole blood donations</li>
+                                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Rest and avoid strenuous activities after donation</li>
+                                <li class="mb-0"><i class="fas fa-check text-success me-2"></i>Keep your contact information updated</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                {% else %}
+                    <!-- Receiver Dashboard -->
+                    <div class="card shadow-sm border-0 mb-4">
+                        <div class="card-header bg-danger text-white d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0"><i class="fas fa-users me-2"></i>Available Donors</h5>
+                            <a href="{{ url_for('search_donors') }}" class="btn btn-sm btn-light">
+                                <i class="fas fa-search me-1"></i>Advanced Search
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            {% if donors %}
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Blood Group</th>
+                                                <th>Phone</th>
+                                                <th>Address</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for donor in donors[:10] %}
+                                            <tr>
+                                                <td>{{ donor['name'] }}</td>
+                                                <td><span class="badge bg-danger">{{ donor['blood_group'] }}</span></td>
+                                                <td>{{ donor['phone'] }}</td>
+                                                <td>{{ donor['address'][:30] }}...</td>
+                                                <td>
+                                                    <span class="badge bg-success">{{ donor['availability_status']|upper }}</span>
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                {% if donors|length > 10 %}
+                                <div class="text-center mt-3">
+                                    <a href="{{ url_for('search_donors') }}" class="btn btn-outline-danger">
+                                        View All Donors
+                                    </a>
+                                </div>
+                                {% endif %}
+                            {% else %}
+                                <div class="text-center py-5">
+                                    <i class="fas fa-search fa-3x text-muted mb-3"></i>
+                                    <p class="text-muted">No donors available at the moment.</p>
+                                    <a href="{{ url_for('search_donors') }}" class="btn btn-danger">
+                                        <i class="fas fa-search me-2"></i>Search Donors
+                                    </a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- Blood Groups Reference -->
+                    <div class="card shadow-sm border-0">
+                        <div class="card-header bg-danger text-white">
+                            <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>Blood Compatibility</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row g-2 small">
+                                <div class="col-6 col-md-3">
+                                    <div class="p-2 bg-light text-center rounded">
+                                        <strong>O-</strong><br>
+                                        <small class="text-muted">Universal Donor</small>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-3">
+                                    <div class="p-2 bg-light text-center rounded">
+                                        <strong>O+</strong><br>
+                                        <small class="text-muted">Most Common</small>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-3">
+                                    <div class="p-2 bg-light text-center rounded">
+                                        <strong>AB+</strong><br>
+                                        <small class="text-muted">Universal Receiver</small>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-3">
+                                    <div class="p-2 bg-light text-center rounded">
+                                        <strong>AB-</strong><br>
+                                        <small class="text-muted">Rare Type</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Switch Role Modal -->
+<div class="modal fade" id="switchRoleModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title"><i class="fas fa-exchange-alt me-2"></i>Switch Role</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <form method="POST" action="{{ url_for('switch_role') }}">
+                <div class="modal-body">
+                    {% if user['role'] == 'donor' %}
+                        <p>Are you sure you want to switch to Receiver role?</p>
+                        <p class="text-muted small">Your donor information will be preserved if you switch back later.</p>
+                    {% else %}
+                        <p>Are you sure you want to switch to Donor role?</p>
+                        {% if not donor_details %}
+                        <div class="mb-3">
+                            <label for="blood_group" class="form-label">Select Your Blood Group *</label>
+                            <select class="form-select" name="blood_group" required>
+                                <option value="">Choose...</option>
+                                <option value="A+">A+</option>
+                                <option value="A-">A-</option>
+                                <option value="B+">B+</option>
+                                <option value="B-">B-</option>
+                                <option value="AB+">AB+</option>
+                                <option value="AB-">AB-</option>
+                                <option value="O+">O+</option>
+                                <option value="O-">O-</option>
+                            </select>
+                        </div>
+                        {% endif %}
+                    {% endif %}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-danger">Confirm Switch</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

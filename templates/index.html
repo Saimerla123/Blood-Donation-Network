@@ -1,0 +1,317 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Blood Donation Network{% endblock %}
+
+{% block content %}
+<!-- Urgent Alert Banner -->
+<div class="urgent-banner">
+    <div class="container">
+        <div class="d-flex align-items-center justify-content-center">
+            <i class="fas fa-exclamation-triangle me-2"></i>
+            <span class="fw-bold me-2">URGENT:</span>
+            <span class="urgent-text">AB- blood needed at City Hospital | O- needed at General Hospital | B+ needed at Metro Clinic</span>
+        </div>
+    </div>
+</div>
+
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="hero-overlay"></div>
+    <div class="container">
+        <div class="row align-items-center min-vh-75">
+            <div class="col-lg-6 text-white hero-content">
+                <h1 class="display-3 fw-bold mb-4 animate-fade-in">Donate Blood, Save Lives</h1>
+                <p class="lead mb-4 animate-fade-in-delay">
+                    Every donation can save up to three lives. Join our community of heroes and make a difference today.
+                </p>
+                <div class="d-flex gap-3 animate-fade-in-delay-2">
+                    <a href="{{ url_for('register') }}" class="btn btn-danger btn-lg px-5 shadow">
+                        <i class="fas fa-user-plus me-2"></i>Register Now
+                    </a>
+                    <a href="{{ url_for('login') }}" class="btn btn-outline-light btn-lg px-5 shadow">
+                        <i class="fas fa-sign-in-alt me-2"></i>Login
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-6 d-none d-lg-block">
+                <div class="hero-illustration text-center">
+                    <i class="fas fa-hand-holding-heart display-1 text-white animate-pulse"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Why Donate Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="display-5 fw-bold text-danger mb-2 section-title">Why Donate Blood?</h2>
+            <p class="lead text-muted mt-3">Your donation can make a life-changing difference</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card border-0 shadow-sm h-100 text-center p-4 hover-lift">
+                    <div class="card-body">
+                        <div class="icon-box mb-3">
+                            <i class="fas fa-heart text-danger fa-3x"></i>
+                        </div>
+                        <h4 class="card-title mb-3">Save Lives</h4>
+                        <p class="card-text text-muted">
+                            One donation can save up to 3 lives. Be a hero for someone in need.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card border-0 shadow-sm h-100 text-center p-4 hover-lift">
+                    <div class="card-body">
+                        <div class="icon-box mb-3">
+                            <i class="fas fa-heartbeat text-danger fa-3x"></i>
+                        </div>
+                        <h4 class="card-title mb-3">Health Benefits</h4>
+                        <p class="card-text text-muted">
+                            Regular donation reduces iron overload and improves cardiovascular health.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card border-0 shadow-sm h-100 text-center p-4 hover-lift">
+                    <div class="card-body">
+                        <div class="icon-box mb-3">
+                            <i class="fas fa-users text-danger fa-3x"></i>
+                        </div>
+                        <h4 class="card-title mb-3">Community Impact</h4>
+                        <p class="card-text text-muted">
+                            Join a community of donors helping patients in emergencies and surgeries.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- How It Works -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="display-5 fw-bold text-danger mb-2 section-title">How It Works</h2>
+            <p class="lead text-muted mt-3">Simple steps to start saving lives</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-3">
+                <div class="text-center">
+                    <div class="step-circle mb-3">1</div>
+                    <h5 class="mb-3">Check Eligibility</h5>
+                    <p class="text-muted">Verify if you meet the health requirements</p>
+                    <a href="{{ url_for('health_checker') }}" class="btn btn-sm btn-outline-danger">Check Now</a>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="text-center">
+                    <div class="step-circle mb-3">2</div>
+                    <h5 class="mb-3">Register</h5>
+                    <p class="text-muted">Create your account as a donor or receiver</p>
+                    <a href="{{ url_for('register') }}" class="btn btn-sm btn-outline-danger">Register</a>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="text-center">
+                    <div class="step-circle mb-3">3</div>
+                    <h5 class="mb-3">Prepare</h5>
+                    <p class="text-muted">Follow the diet plan before donation</p>
+                    <a href="{{ url_for('diet_plan') }}" class="btn btn-sm btn-outline-danger">View Plan</a>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="text-center">
+                    <div class="step-circle mb-3">4</div>
+                    <h5 class="mb-3">Save Lives</h5>
+                    <p class="text-muted">Make a difference in someone's life today</p>
+                    <a href="{{ url_for('login') }}" class="btn btn-sm btn-outline-danger">Get Started</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="cta-section py-5 bg-danger text-white">
+    <div class="container text-center">
+        <h2 class="display-5 fw-bold mb-4">Ready to Make a Difference?</h2>
+        <p class="lead mb-4">Join thousands of donors who are already saving lives</p>
+        <a href="{{ url_for('register') }}" class="btn btn-light btn-lg px-5 shadow">
+            <i class="fas fa-user-plus me-2"></i>Get Started Today
+        </a>
+    </div>
+</section>
+
+<!-- Stats Section with Real-Time Counter -->
+<section class="py-5 bg-white">
+    <div class="container">
+        <div class="text-center mb-4">
+            <span class="badge bg-danger px-3 py-2 mb-3">
+                <i class="fas fa-circle pulse-dot me-2"></i>LIVE STATISTICS
+            </span>
+        </div>
+        <div class="row text-center g-4">
+            <div class="col-md-3">
+                <div class="stat-box">
+                    <div class="stat-icon mb-3">
+                        <i class="fas fa-users text-danger"></i>
+                    </div>
+                    <h2 class="display-4 fw-bold text-danger mb-2" id="donorCount">0</h2>
+                    <p class="text-muted fw-bold">Active Donors</p>
+                    <small class="text-success"><i class="fas fa-arrow-up"></i> +12 this week</small>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-box">
+                    <div class="stat-icon mb-3">
+                        <i class="fas fa-heartbeat text-danger"></i>
+                    </div>
+                    <h2 class="display-4 fw-bold text-danger mb-2" id="livesSaved">0</h2>
+                    <p class="text-muted fw-bold">Lives Saved</p>
+                    <small class="text-success"><i class="fas fa-arrow-up"></i> Growing daily</small>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-box">
+                    <div class="stat-icon mb-3">
+                        <i class="fas fa-clock text-danger"></i>
+                    </div>
+                    <h2 class="display-4 fw-bold text-danger mb-2">24/7</h2>
+                    <p class="text-muted fw-bold">Support Available</p>
+                    <small class="text-primary"><i class="fas fa-circle pulse-dot-small"></i> Online now</small>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-box">
+                    <div class="stat-icon mb-3">
+                        <i class="fas fa-shield-alt text-danger"></i>
+                    </div>
+                    <h2 class="display-4 fw-bold text-danger mb-2">100%</h2>
+                    <p class="text-muted fw-bold">Secure & Safe</p>
+                    <small class="text-success"><i class="fas fa-check-circle"></i> Verified</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Blood Availability Status -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="display-6 fw-bold text-danger mb-2 section-title">Blood Availability Status</h2>
+            <p class="lead text-muted mt-3">Real-time blood group availability in our network</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-3 col-sm-6" data-aos="fade-up">
+                <div class="blood-card text-center">
+                    <div class="blood-type">A+</div>
+                    <div class="availability-bar">
+                        <div class="fill" style="width: 85%; background: #059669;"></div>
+                    </div>
+                    <p class="mt-2 mb-0"><span class="badge bg-success">Available</span></p>
+                    <small class="text-muted">24 donors</small>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6" data-aos="fade-up" data-aos-delay="100">
+                <div class="blood-card text-center">
+                    <div class="blood-type">O+</div>
+                    <div class="availability-bar">
+                        <div class="fill" style="width: 90%; background: #059669;"></div>
+                    </div>
+                    <p class="mt-2 mb-0"><span class="badge bg-success">Available</span></p>
+                    <small class="text-muted">32 donors</small>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6" data-aos="fade-up" data-aos-delay="200">
+                <div class="blood-card text-center">
+                    <div class="blood-type">B+</div>
+                    <div class="availability-bar">
+                        <div class="fill" style="width: 60%; background: #f59e0b;"></div>
+                    </div>
+                    <p class="mt-2 mb-0"><span class="badge bg-warning">Limited</span></p>
+                    <small class="text-muted">15 donors</small>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6" data-aos="fade-up" data-aos-delay="300">
+                <div class="blood-card text-center">
+                    <div class="blood-type">AB+</div>
+                    <div class="availability-bar">
+                        <div class="fill" style="width: 40%; background: #dc2626;"></div>
+                    </div>
+                    <p class="mt-2 mb-0"><span class="badge bg-danger">Urgent Need</span></p>
+                    <small class="text-muted">8 donors</small>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6" data-aos="fade-up" data-aos-delay="400">
+                <div class="blood-card text-center">
+                    <div class="blood-type">A-</div>
+                    <div class="availability-bar">
+                        <div class="fill" style="width: 70%; background: #059669;"></div>
+                    </div>
+                    <p class="mt-2 mb-0"><span class="badge bg-success">Available</span></p>
+                    <small class="text-muted">18 donors</small>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6" data-aos="fade-up" data-aos-delay="500">
+                <div class="blood-card text-center">
+                    <div class="blood-type">O-</div>
+                    <div class="availability-bar">
+                        <div class="fill" style="width: 50%; background: #f59e0b;"></div>
+                    </div>
+                    <p class="mt-2 mb-0"><span class="badge bg-warning">Limited</span></p>
+                    <small class="text-muted">12 donors</small>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6" data-aos="fade-up" data-aos-delay="600">
+                <div class="blood-card text-center">
+                    <div class="blood-type">B-</div>
+                    <div class="availability-bar">
+                        <div class="fill" style="width: 35%; background: #dc2626;"></div>
+                    </div>
+                    <p class="mt-2 mb-0"><span class="badge bg-danger">Urgent Need</span></p>
+                    <small class="text-muted">6 donors</small>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6" data-aos="fade-up" data-aos-delay="700">
+                <div class="blood-card text-center">
+                    <div class="blood-type">AB-</div>
+                    <div class="availability-bar">
+                        <div class="fill" style="width: 30%; background: #dc2626;"></div>
+                    </div>
+                    <p class="mt-2 mb-0"><span class="badge bg-danger">Urgent Need</span></p>
+                    <small class="text-muted">5 donors</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+// Animated counter for statistics
+function animateCounter(id, target) {
+    let current = 0;
+    const increment = target / 100;
+    const timer = setInterval(() => {
+        current += increment;
+        if (current >= target) {
+            current = target;
+            clearInterval(timer);
+        }
+        document.getElementById(id).textContent = Math.floor(current) + (target > 100 ? '+' : '');
+    }, 20);
+}
+
+// Initialize counters on page load
+window.addEventListener('load', () => {
+    animateCounter('donorCount', 1247);
+    animateCounter('livesSaved', 5832);
+});
+</script>
+{% endblock %}

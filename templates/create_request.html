@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% block title %}Create Blood Request - Blood Donation Network{% endblock %}
+
+{% block content %}
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow-sm border-0">
+                    <div class="card-header bg-danger text-white">
+                        <h4 class="mb-0"><i class="fas fa-plus-circle me-2"></i>Create Urgent Blood Request</h4>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="alert alert-info border-0 mb-4">
+                            <i class="fas fa-info-circle me-2"></i>
+                            <strong>Note:</strong> This request will be visible to all registered donors. 
+                            Please provide accurate information for quick response.
+                        </div>
+                        
+                        <form method="POST" action="{{ url_for('create_request') }}">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="blood_group" class="form-label">
+                                        <i class="fas fa-tint me-1"></i>Blood Group Needed *
+                                    </label>
+                                    <select class="form-select" id="blood_group" name="blood_group" required>
+                                        <option value="">Select blood group...</option>
+                                        <option value="A+">A+</option>
+                                        <option value="A-">A-</option>
+                                        <option value="B+">B+</option>
+                                        <option value="B-">B-</option>
+                                        <option value="AB+">AB+</option>
+                                        <option value="AB-">AB-</option>
+                                        <option value="O+">O+</option>
+                                        <option value="O-">O-</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="units_needed" class="form-label">
+                                        <i class="fas fa-vial me-1"></i>Units Needed *
+                                    </label>
+                                    <input type="number" class="form-control" id="units_needed" 
+                                           name="units_needed" min="1" max="10" value="1" required>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="urgency" class="form-label">
+                                    <i class="fas fa-exclamation-triangle me-1"></i>Urgency Level *
+                                </label>
+                                <select class="form-select" id="urgency" name="urgency" required>
+                                    <option value="normal">Normal - Within a week</option>
+                                    <option value="urgent">Urgent - Within 48 hours</option>
+                                    <option value="critical">Critical - Immediate (24 hours)</option>
+                                </select>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="hospital_name" class="form-label">
+                                    <i class="fas fa-hospital me-1"></i>Hospital Name *
+                                </label>
+                                <input type="text" class="form-control" id="hospital_name" 
+                                       name="hospital_name" placeholder="Enter hospital name" required>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="contact_person" class="form-label">
+                                        <i class="fas fa-user me-1"></i>Contact Person *
+                                    </label>
+                                    <input type="text" class="form-control" id="contact_person" 
+                                           name="contact_person" placeholder="Name of contact person" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="contact_phone" class="form-label">
+                                        <i class="fas fa-phone me-1"></i>Contact Phone *
+                                    </label>
+                                    <input type="tel" class="form-control" id="contact_phone" 
+                                           name="contact_phone" placeholder="Phone number" required>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="additional_notes" class="form-label">
+                                    <i class="fas fa-sticky-note me-1"></i>Additional Notes
+                                </label>
+                                <textarea class="form-control" id="additional_notes" name="additional_notes" 
+                                          rows="3" placeholder="Any additional information (patient condition, preferred donation time, etc.)"></textarea>
+                            </div>
+                            
+                            <div class="d-flex gap-2 mt-4">
+                                <button type="submit" class="btn btn-danger">
+                                    <i class="fas fa-paper-plane me-2"></i>Submit Request
+                                </button>
+                                <a href="{{ url_for('dashboard') }}" class="btn btn-outline-secondary">
+                                    <i class="fas fa-times me-2"></i>Cancel
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
